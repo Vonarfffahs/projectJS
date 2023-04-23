@@ -1,31 +1,25 @@
 /* Задание на урок:
 
-1) Создать переменную numberOfFilms и в неё поместить ответ от пользователя на вопрос:
-'Сколько фильмов вы уже посмотрели?'
+1) Автоматизировать вопросы пользователю про фильмы при помощи цикла
 
-2) Создать объект personalMovieDB и в него поместить такие свойства:
-    - count - сюда передается ответ на первый вопрос
-    - movies - в это свойство поместить пустой объект
-    - actors - тоже поместить пустой объект
-    - genres - сюда поместить пустой массив
-    - privat - в это свойство поместить boolean(логическое) значение false
+2) Сделать так, чтобы пользователь не мог оставить ответ в виде пустой строки,
+отменить ответ или ввести название фильма длинее, чем 50 символов. Если это происходит - 
+возвращаем пользователя к вопросам опять
 
-3) Задайте пользователю по два раза вопросы:
-    - 'Один из последних просмотренных фильмов?'
-    - 'На сколько оцените его?'
-Ответы стоит поместить в отдельные переменные
-Записать ответы в объект movies в формате: 
-    movies: {
-        'logan': '8.1'
-    }
+3) При помощи условий проверить  personalMovieDB.count, и если он меньше 10 - вывести сообщение
+"Просмотрено довольно мало фильмов", если от 10 до 30 - "Вы классический зритель", а если больше - 
+"Вы киноман". А если не подошло ни к одному варианту - "Произошла ошибка"
 
-Проверить, чтобы все работало без ошибок в консоли */
+4) Потренироваться и переписать цикл еще двумя способами*/
 
 'use strict';
 
-const numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?", ""); // #1
+let numberOfFilms;
+do{
+    numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?", "");
+} while (numberOfFilms === '' || numberOfFilms.length >= 50 || numberOfFilms === false)
 
-const personalMovieDB = {                                             // #2
+const personalMovieDB = {                                             
     count: numberOfFilms,
     movies: {},
     actors: {},
@@ -33,15 +27,31 @@ const personalMovieDB = {                                             // #2
     privat: false
 };
 
-const answer1 = prompt("Один из последних просмотренных фильмов?", ""),
-      answer2 = prompt("На сколько оцените его?", ""),
-      answer3 = prompt("Один из последних просмотренных фильмов?", ""),
-      answer4 = prompt("На сколько оцените его?", "");
+let answer1,
+    answer2;
+      
+for (let index = 0; index < 2; index++) {
+    do{
+        answer1 = prompt("Один из последних просмотренных фильмов?", "");
+    } while (answer1 === '' || answer1.length >= 50 || answer1 === false)
+    
+    do{
+        answer2 = prompt("На сколько оцените его?", "");
+    } while (answer2 === '' || answer2.length >= 50 || answer2 === false) 
 
-personalMovieDB.movies[answer1] = answer2;
-personalMovieDB.movies[answer3] = answer4;
+    personalMovieDB.movies[answer1] = answer2;
+};
+
+if (personalMovieDB.count < 10) {
+    alert('Просмотрено довольно мало фильмов');
+} else if (personalMovieDB.count >= 10 && personalMovieDB.count <= 30) {
+    alert('Вы классический зритель');
+} else {
+    alert('Вы киноман');
+}
 
 console.log(personalMovieDB);
+
 
 
 
